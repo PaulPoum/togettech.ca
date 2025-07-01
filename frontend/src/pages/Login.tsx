@@ -1,17 +1,19 @@
 // src/pages/Login.tsx
 import React, { useState } from 'react';
-import { Container, Row, Col, Form, Button, Card, Image } from 'react-bootstrap';
+import { Container, Row, Col, Form, Button, Card, Image, Alert } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router-dom';
-import { Github } from 'lucide-react';
-import { SiGoogle } from 'react-icons/si';
+import { useNavigate, Link } from 'react-router-dom';
+import axios from 'axios';
 import heroImg from '../assets/login-visual.webp';
 import logo from '../assets/togettech-logo.svg';
+import { FaGithub as Github } from 'react-icons/fa';
+import { SiGoogle } from 'react-icons/si';
 
 const Login: React.FC = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const [values, setValues] = useState({ email: '', password: '', remember: false });
+  const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -21,10 +23,30 @@ const Login: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setError(null);
     setLoading(true);
+
     try {
-      // TODO: appel API login
+      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:4000';
+      await axios.post(`${apiUrl}/api/auth/login`, {
+        email: values.email,
+        password: values.password,
+      });
+      // stocker token, user, etc.
       navigate('/');
+    } catch (err: unknown) {
+      console.error(err);
+      if (
+        typeof err === 'object' &&
+        err !== null &&
+        'response' in err &&
+        typeof (err as { response?: { status?: number } }).response === 'object' &&
+        (err as { response?: { status?: number } }).response?.status === 401
+      ) {
+        setError(t('login.invalidCredentials') || 'Identifiants invalides');
+      } else {
+        setError(t('login.error') || 'Une erreur est survenue, réessayez');
+      }
     } finally {
       setLoading(false);
     }
@@ -32,8 +54,8 @@ const Login: React.FC = () => {
 
   return (
     <Container fluid className="p-0" style={{ minHeight: '100vh' }}>
-      <Row className="gx-0 gy-0" style={{ minHeight: '100vh' }}>
-        {/* Visuel (caché < md) */}
+      <Row className="gx-0" style={{ minHeight: '100vh' }}>
+        {/* Illustration gauche */}
         <Col
           md={6}
           className="d-none d-md-flex bg-dark align-items-center justify-content-center p-0"
@@ -53,15 +75,16 @@ const Login: React.FC = () => {
           className="d-flex align-items-center justify-content-center bg-white p-4 p-md-5"
         >
           <div style={{ width: '100%', maxWidth: 400 }}>
-            {/* Logo */}
             <div className="text-center mb-4">
               <Image src={logo} alt="TogetTech" style={{ height: 40 }} />
               <h3 className="mt-3">{t('login.title')}</h3>
               <small className="text-muted">
                 {t('login.noAccount')}{' '}
-                <a href="/signup">{t('login.signUp')}</a>
+                <Link to="/register">{t('login.signUp')}</Link>
               </small>
             </div>
+
+            {error && <Alert variant="danger">{error}</Alert>}
 
             <Card className="border-0 shadow-sm">
               <Card.Body>
@@ -100,7 +123,7 @@ const Login: React.FC = () => {
                       checked={values.remember}
                       onChange={handleChange}
                     />
-                    <a href="/forgot-password">{t('login.forgot')}</a>
+                    <Link to="/forgot-password">{t('login.forgot')}</Link>
                   </div>
 
                   <Button

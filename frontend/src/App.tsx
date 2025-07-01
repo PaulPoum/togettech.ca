@@ -14,6 +14,7 @@ import type { Recognition } from "./components/PricingRecognitionMindmap";
 import NewsSection from "./components/NewsSection";
 import type { NewsItem } from "./components/NewsSection";
 import Login from "./pages/Login";
+import Register from "./pages/Register";
 import { Container, Row, Col } from "react-bootstrap";
 import {
   Cpu,
@@ -286,7 +287,7 @@ const App: React.FC = () => {
       <Routes>
         {/* Login route without Layout */}
         <Route path="/login" element={<Login />} />
-
+        <Route path="/register" element={<Register />} />
         {/* All other routes wrapped in Layout */}
         <Route
           path="/*"
