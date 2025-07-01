@@ -1,0 +1,17 @@
+{
+  "nav": {
+    "why": "Pourquoi",
+    "platform": "La plateforme",
+    "solutions": "Solutions",
+    "login": "Connexion",
+    "start": "Commencer"
+  },
+  "footer": {
+    "why": "Pourquoi",
+    "ourMethod": "Notre méthodologie",
+    "contact": "Contact"
+  },
+  "hero": {
+    "cta": "Commencer →"
+  }
+}

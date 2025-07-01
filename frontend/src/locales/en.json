@@ -1,0 +1,17 @@
+{
+  "nav": {
+    "why": "Why",
+    "platform": "The Platform",
+    "solutions": "Solutions",
+    "login": "Login",
+    "start": "Start for free"
+  },
+  "footer": {
+    "why": "Why",
+    "ourMethod": "Our methodology",
+    "contact": "Contact"
+  },
+  "hero": {
+    "cta": "Start for free →"
+  }
+}
