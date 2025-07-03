@@ -6,7 +6,15 @@ import { User } from '../models/User.js';
 export const listUsers = async (req, res) => {
   try {
     const users = await User.findAll({
-      attributes: ['id', 'email', 'firstName', 'lastName', 'role', 'isActive', 'createdAt'],
+      attributes: [
+        'id',
+        'email',
+        ['first_name', 'firstName'],
+        ['last_name', 'lastName'],
+        'role',
+        ['is_active', 'isActive'],
+        ['created_at', 'createdAt'],
+      ],
     });
     res.json(users);
   } catch (err) {
@@ -19,9 +27,19 @@ export const listUsers = async (req, res) => {
 export const getUserById = async (req, res) => {
   try {
     const user = await User.findByPk(req.params.id, {
-      attributes: ['id', 'email', 'firstName', 'lastName', 'role', 'isActive', 'createdAt'],
+      attributes: [
+        'id',
+        'email',
+        ['first_name', 'firstName'],
+        ['last_name', 'lastName'],
+        'role',
+        ['is_active', 'isActive'],
+        ['created_at', 'createdAt'],
+      ],
     });
-    if (!user) return res.status(404).json({ error: 'Utilisateur non trouvé' });
+    if (!user) {
+      return res.status(404).json({ error: 'Utilisateur non trouvé' });
+    }
     res.json(user);
   } catch (err) {
     console.error(err);
@@ -35,6 +53,7 @@ export const createUser = async (req, res) => {
   if (!email || !password) {
     return res.status(400).json({ error: 'Email et mot de passe requis' });
   }
+
   try {
     const hash = await bcrypt.hash(password, 10);
     const user = await User.create({
@@ -68,7 +87,9 @@ export const updateUser = async (req, res) => {
   const { firstName, lastName, role, isActive } = req.body;
   try {
     const user = await User.findByPk(req.params.id);
-    if (!user) return res.status(404).json({ error: 'Utilisateur non trouvé' });
+    if (!user) {
+      return res.status(404).json({ error: 'Utilisateur non trouvé' });
+    }
     await user.update({
       firstName: firstName ?? user.firstName,
       lastName: lastName ?? user.lastName,
@@ -86,8 +107,10 @@ export const updateUser = async (req, res) => {
 export const deleteUser = async (req, res) => {
   try {
     const user = await User.findByPk(req.params.id);
-    if (!user) return res.status(404).json({ error: 'Utilisateur non trouvé' });
-    // soft delete
+    if (!user) {
+      return res.status(404).json({ error: 'Utilisateur non trouvé' });
+    }
+    // Soft delete
     await user.update({ isActive: false });
     res.json({ message: 'Utilisateur désactivé' });
   } catch (err) {

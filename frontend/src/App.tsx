@@ -1,7 +1,12 @@
 // src/App.tsx
 import React from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import Layout from "./components/Layout";
+
+// layouts
+import ClientLayout from "./layouts/ClientLayout";
+import AdminLayout from "./layouts/AdminLayout";
+
+// public components
 import Hero from "./components/Hero";
 import FeatureCard from "./components/FeatureCard";
 import type { FeatureCardProps } from "./components/FeatureCard";
@@ -11,21 +16,36 @@ import OddContributions from "./components/OddContributions";
 import type { Contribution } from "./components/OddContributions";
 import Roadmap from "./components/PricingRecognitionMindmap";
 import type { Recognition } from "./components/PricingRecognitionMindmap";
+import Programs from "./components/Programs";
+
 import NewsSection from "./components/NewsSection";
-import type { NewsItem } from "./components/NewsSection";
+
+import CareersPage from "./pages/client/Careers";
+import CareerDetail from "./pages/client/CareerDetail";
+import NewsDetail from "./pages/client/NewsDetail";
+import NewsPage from "./pages/client/News";
+
+// admin pages
+import Dashboard from "./pages/admin/Dashboard";
+import AdminCareers from "./pages/admin/Careers";
+import AdminNews from "./pages/admin/News"; 
+
+// auth
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+
+// utilities
 import { Container, Row, Col } from "react-bootstrap";
 import {
-  Cpu,
   Activity,
-  CreditCard,
-  CloudRain,
-  Smartphone,
-  Globe,
-  Cloud,
   Users,
+  Cpu,
+  CloudRain,
   Satellite,
+  Globe,
+  Smartphone,
+  Cloud,
+  CreditCard,
 } from "lucide-react";
 
 const App: React.FC = () => {
@@ -104,7 +124,7 @@ const App: React.FC = () => {
       linkHref: "#ppi",
     },
   ];
-  // Full-width Use Case blocks (Projets TogetTech)
+  // Use case blocks (projets)
   const useCaseBlocks: UseCaseBlock[] = [
     {
       label: "Agritech durable",
@@ -170,21 +190,7 @@ const App: React.FC = () => {
       mediaUrl: "/images/geoclimate-demo.svg",
     },
   ];
-  // Contributions ODD
-  // const contributions: Contribution[] = [
-  //   {
-  //     logoUrl: "/images/vision.webp",
-  //     title: "OpenTable",
-  //     description:
-  //       "OpenTable a réduit de 48 % ses tickets de support en déployant notre IA.",
-  //     linkText: "Read more",
-  //     linkHref: "#",
-  //     imageUrl: "/images/vision.webp",
-  //     statValue: "48 %",
-  //     statLabel: "support tickets reduced",
-  //   },
-  // ];
-
+  // ODD contributions
   const contributions: Contribution[] = [
     {
       sdgIconUrl: "/images/odds/zero-hunger.png",
@@ -193,7 +199,7 @@ const App: React.FC = () => {
       description:
         "Grâce à EcoSystem+, les agriculteurs ont réduit de 30 % les pertes post-récolte en optimisant l’irrigation et le stockage.",
       statValue: "30 %",
-      statLabel: "réduction des pertes",
+      statLabel: "Réduction des pertes",
     },
     {
       sdgIconUrl: "/images/odds/quality-education.png",
@@ -202,7 +208,7 @@ const App: React.FC = () => {
       description:
         "LinguaKids a permis à plus de 5 000 enfants d’apprendre une nouvelle langue hors ligne via une plateforme gamifiée.",
       statValue: "5 000+",
-      statLabel: "enfants formés",
+      statLabel: "Enfants formés",
     },
     {
       sdgIconUrl: "/images/odds/clean-water.png",
@@ -211,7 +217,7 @@ const App: React.FC = () => {
       description:
         "EcoSystem+ GeoClimate Explorer anticipe les stress hydriques pour économiser jusqu’à 20 % d’eau d’irrigation.",
       statValue: "20 %",
-      statLabel: "d’économie d’eau",
+      statLabel: "D’économie d’eau",
     },
     {
       sdgIconUrl: "/images/odds/climate-action.png",
@@ -220,11 +226,10 @@ const App: React.FC = () => {
       description:
         "Nos alertes climatiques en temps réel ont aidé des communautés à se préparer à 15 % plus tôt aux tempêtes et inondations.",
       statValue: "15 %",
-      statLabel: "préavis accru",
+      statLabel: "Préavis accru",
     },
   ];
-
-  // Roadmap / Reconnaissances
+  // Roadmap / reconnaissances
   const recognitions: Recognition[] = [
     {
       year: "2021",
@@ -251,111 +256,101 @@ const App: React.FC = () => {
       label: "Global Impact Award",
     },
   ];
-  // News
-  const newsItems: NewsItem[] = [
-    {
-      id: "1",
-      title: "TogetTech lève 5M€ pour accélérer son IA agricole",
-      excerpt:
-        "Grâce à ce nouveau financement, nous allons déployer notre solution sur l'ensemble de l'Afrique de l'Ouest.",
-      date: "15 juin 2025",
-      imageUrl: "/images/ecosystem.webp",
-      linkHref: "/actualites/funding-2025",
-    },
-    {
-      id: "2",
-      title: "Partenariat stratégique avec SatAgro",
-      excerpt:
-        "TogetTech s’associe à SatAgro pour intégrer des données satellites en temps réel.",
-      date: "30 mai 2025",
-      imageUrl: "/images/silia.webp",
-      linkHref: "/actualites/partenariat-satagro",
-    },
-    {
-      id: "3",
-      title: "Lancement de l’API publique TogetTech",
-      excerpt:
-        "Accédez dès aujourd’hui à notre API pour intégrer nos modèles d’IA dans vos applications.",
-      date: "10 mai 2025",
-      imageUrl: "/images/ecosystem.webp",
-      linkHref: "/actualites/lancement-api",
-    },
-  ];
-
+  
   return (
     <BrowserRouter>
       <Routes>
-        {/* Login route without Layout */}
+        {/* Auth routes */}
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        {/* All other routes wrapped in Layout */}
-        <Route
-          path="/*"
-          element={
-            <Layout>
-              <Routes>
-                <Route
-                  index
-                  element={
-                    <>
-                      <Hero />
-                      <hr className="border-secondary mb-5" />
-                      <section
-                        id="features"
-                        style={{ backgroundColor: "#0B0E14" }}
-                        className="py-6"
-                      >
-                        <Container>
-                          <div className="text-start mb-5">
-                            <p className="text-info text-uppercase small mb-2">
-                              Notre expertise
-                            </p>
-                            <h2 className="text-white fw-bold mb-3">
-                              Des solutions sur-mesure pour tous vos enjeux
-                            </h2>
-                            <p className="text-white fs-5 mb-5">
-                              De l’IA appliquée à l’agritech, en passant par la
-                              FinTech et la cartographie, découvrez comment
-                              TogetTech transforme vos défis en opportunités.
-                            </p>
-                          </div>
-                          <Row className="g-4">
-                            {features.map((f, idx) => (
-                              <Col key={idx} xs={12} md={6} lg={4}>
-                                <FeatureCard {...f} />
-                              </Col>
-                            ))}
-                          </Row>
-                        </Container>
-                      </section>
-                      <hr className="border-secondary mb-5" />
-                      <section id="use-cases">
-                        <UseCasesSection blocks={useCaseBlocks} />
-                      </section>
-                      <hr className="border-secondary mb-5" />
-                      <section id="odd">
-                        <OddContributions contributions={contributions} />
-                      </section>
 
-                      <section id="recognitions">
-                        <Roadmap recognitions={recognitions} />
-                      </section>
+        {/* Public client routes */}
+        <Route element={<ClientLayout />}>
+          <Route
+            index
+            element={
+              <>
+                <Hero />
+                <hr className="border-secondary mb-5" />
 
-                      <hr className="border-secondary mb-5" />
+                {/* Domaines */}
+                <section
+                  id="features"
+                  className="py-6"
+                  style={{ backgroundColor: "#0B0E14" }}
+                >
+                  <Container>
+                    <div className="text-start mb-5">
+                      <p className="text-info text-uppercase small mb-2">
+                        Notre expertise
+                      </p>
+                      <h2 className="text-white fw-bold mb-3">
+                        Des solutions sur-mesure pour tous vos enjeux
+                      </h2>
+                      <p className="text-white fs-5 mb-5">
+                        De l’IA appliquée à l’agritech, en passant par la
+                        FinTech…
+                      </p>
+                    </div>
+                    <Row className="g-4">
+                      {features.map((f, idx) => (
+                        <Col key={idx} xs={12} md={6} lg={4}>
+                          <FeatureCard {...f} />
+                        </Col>
+                      ))}
+                    </Row>
+                  </Container>
+                </section>
+                <hr className="border-secondary mb-5" />
 
-                      <section id="news">
-                        <NewsSection items={newsItems} />
-                      </section>
-                      <hr className="border-secondary mb-5" />
-                    </>
-                  }
-                />
-                {/* Redirect unknown */}
-                <Route path="*" element={<Navigate to="/" />} />
-              </Routes>
-            </Layout>
-          }
-        />
+                {/* Use Cases */}
+                <section id="use-cases">
+                  <UseCasesSection blocks={useCaseBlocks} />
+                </section>
+                <hr className="border-secondary mb-5" />
+
+                {/* Contributions ODD */}
+                <section id="odd">
+                  <OddContributions contributions={contributions} />
+                </section>
+                <hr className="border-secondary mb-5" />
+
+                {/* Roadmap & Récompenses */}
+                <section id="recognitions">
+                  <Roadmap recognitions={recognitions} />
+                </section>
+
+                {/* Programme DataClevers */}
+                <Programs />
+
+                {/* Actualités */}
+                <section id="news">
+                  <NewsSection />
+                </section>
+                <hr className="border-secondary mb-5" />
+              </>
+            }
+          />
+
+          {/* Public Careers */}
+          <Route path="careers" element={<CareersPage />} />
+          <Route path="careers/:id" element={<CareerDetail />} />
+
+          {/* Public News Detail */}
+          <Route path="news" element={<NewsPage />} />
+          <Route path="news/:id" element={<NewsDetail />} />
+        </Route>
+
+        {/* Admin routes */}
+        <Route path="/admin" element={<AdminLayout />}>
+          <Route index element={<Dashboard />} />
+          <Route path="dashboard" element={<Dashboard />} />
+          <Route path="careers" element={<AdminCareers />} />
+          <Route path="/admin/news" element={<AdminNews />} />
+        </Route>
+
+        {/* Fallback */}
+        <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </BrowserRouter>
   );

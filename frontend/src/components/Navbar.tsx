@@ -14,6 +14,7 @@ const navItems: NavItem[] = [
   { key: 'domains',   href: '/#features',       labelFr: 'Domaines',    labelEn: 'Domains' },
   { key: 'projects',  href: '/#use-cases',      labelFr: 'Projets',     labelEn: 'Projects' },
   { key: 'news',      href: '/#news',           labelFr: 'Actualités',  labelEn: 'News' },
+  { key: 'careers',      href: '/careers',       labelFr: 'Carrières',   labelEn: 'Careers' },
   // { key: 'contact',   href: '/#contact',        labelFr: 'Contact',     labelEn: 'Contact' },
 ];
 
@@ -50,8 +51,8 @@ const Navbar: React.FC = () => {
         }}
       >
         {lang === 'fr'
-          ? "TogetTech au RAISE Summit #8 du 08 au 09 juillet —"
-          : 'TogetTech at RAISE Summit #8, July 08–09 —'}{' '}
+          ? "TogetTech au CONIA du 07 AU 08 Juillet 2025 – Palais des Congrès, Yaoundé —"
+          : 'TogetTech at CONIA from July 7 to 8, 2025 – Palais des Congrès, Yaoundé —'}{' '}
         <a href="#meet" className="text-dark text-decoration-underline">
           {lang === 'fr' ? 'Rejoignez-nous' : 'Join us'}
         </a>
@@ -126,7 +127,6 @@ const Navbar: React.FC = () => {
               <a
                 href="/login"
                 className="text-light me-3 text-decoration-none"
-                target="_blank"
                 rel="noopener noreferrer"
               >
                 {lang === 'fr' ? 'Connexion' : 'Login'}
