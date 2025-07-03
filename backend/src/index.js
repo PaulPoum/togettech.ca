@@ -43,7 +43,7 @@ app.use('/api/traffic', trafficRoutes);
 const start = async () => {
   try {
     await sequelize.authenticate();
-    await sequelize.sync({ alter: true });
+    
     console.log('✅ MySQL connecté');
 
     // **IMPORTANT** : on retire alter:true pour ne plus tenter de recréer sans cesse
