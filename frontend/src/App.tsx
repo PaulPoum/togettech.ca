@@ -29,6 +29,8 @@ import NewsPage from "./pages/client/News";
 import Dashboard from "./pages/admin/Dashboard";
 import AdminCareers from "./pages/admin/Careers";
 import AdminNews from "./pages/admin/News"; 
+import AdminApplications from "./pages/admin/Applications";
+
 
 // auth
 import Login from "./pages/Login";
@@ -346,6 +348,7 @@ const App: React.FC = () => {
           <Route index element={<Dashboard />} />
           <Route path="dashboard" element={<Dashboard />} />
           <Route path="careers" element={<AdminCareers />} />
+          <Route path="applications" element={<AdminApplications />} />
           <Route path="/admin/news" element={<AdminNews />} />
         </Route>
 

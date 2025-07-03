@@ -62,6 +62,15 @@ const AdminSidebar: React.FC<AdminSidebarProps> = ({ show, onHide }) => {
           </Nav.Link>
           <Nav.Link
             as={Link}
+            to="/admin/applications"
+            onClick={onHide}
+            active={pathname === "/admin/applications"}
+            className="d-flex align-items-center py-2 px-3 text-white"  
+          >
+            <FileText className="me-2" /> Candidatures  
+          </Nav.Link>
+          <Nav.Link
+            as={Link}
             to="/admin/stats"
             onClick={onHide}
             active={pathname === "/admin/stats"}
