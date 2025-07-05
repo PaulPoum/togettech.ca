@@ -44,7 +44,7 @@ const Programs: React.FC = () => (
               <Card className="h-100 bg-transparent border border-secondary">
                 <Card.Body>
                   <Badge bg="info" className="mb-3">Enjeu {idx + 1}</Badge>
-                  <Card.Text>{text}</Card.Text>
+                  <Card.Text className='text-info'>{text}</Card.Text>
                 </Card.Body>
               </Card>
             </motion.div>

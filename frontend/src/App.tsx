@@ -234,28 +234,28 @@ const App: React.FC = () => {
   // Roadmap / reconnaissances
   const recognitions: Recognition[] = [
     {
-      year: "2021",
+      year: "2019",
       logoUrl: "/images/tsv.jpg",
-      alt: "Innovation 2024",
-      label: "Innovation 2024",
+      alt: "Technipole Sup Valor",
+      label: "Technipole Sup Valor Incubator",
     },
     {
       year: "2022",
       logoUrl: "/images/kta.png",
-      alt: "Agritech Best 2023",
-      label: "Best Agritech 2023",
-    },
-    {
-      year: "2023",
-      logoUrl: "/images/cdic.jpg",
-      alt: "UN SDG Champion",
-      label: "SDG Champion",
+      alt: "Cameroon Digital Innovation",
+      label: "Cameroon Digital Innovation",
     },
     {
       year: "2024",
+      logoUrl: "/images/cdic.jpg",
+      alt: "AgriTech Innovation Challenge",
+      label: "AgriTech Innovation Challenge",
+    },
+    {
+      year: "2025",
       logoUrl: "/images/Logo_12.png",
-      alt: "Global Impact Award",
-      label: "Global Impact Award",
+      alt: "Orange FAB",
+      label: "Orange FAB",
     },
   ];
   
@@ -315,7 +315,6 @@ const App: React.FC = () => {
                 <section id="odd">
                   <OddContributions contributions={contributions} />
                 </section>
-                <hr className="border-secondary mb-5" />
 
                 {/* Roadmap & Récompenses */}
                 <section id="recognitions">

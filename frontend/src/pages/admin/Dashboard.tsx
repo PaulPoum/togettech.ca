@@ -3,7 +3,9 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Row, Col, Card, Table, Spinner } from 'react-bootstrap';
 import { motion } from 'framer-motion';
-import { Bar } from 'react-chartjs-2';
+//import { Bar } from 'react-chartjs-2';
+const Bar = React.lazy(() => import('react-chartjs-2').then(m => ({ default: m.Bar })));
+
 import 'chart.js/auto';
 
 type StatItem = {

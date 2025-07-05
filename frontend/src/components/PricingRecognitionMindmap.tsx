@@ -70,7 +70,7 @@ const Roadmap: React.FC<RoadmapProps> = ({ recognitions }) => (
                       />
                       <div>
                         <div className="text-info fw-bold mb-1">{rec.year}</div>
-                        <div className="h5 mb-0">{rec.label}</div>
+                        <div className="h5 mb-0 text-white">{rec.label}</div>
                       </div>
                     </Card.Body>
                   </Card>
